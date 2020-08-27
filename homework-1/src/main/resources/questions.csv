@@ -1,0 +1,5 @@
+"What is a class in java?","1) class is a blueprint from which individual objects are created. A class can contain fields and methods to describe the behavior of an object","2) class is a special data type","3) class is used to allocate memory to a data type","4) none of the above"
+"Which of the following is true about String?","1) String is mutable","2) String is immutable","3) String is a data type", "4) None of the above"
+"What kind of variables a class can consist of?","1) class variables","2) instance variables","3) class variables, local variables, instance variables", "4) class variables","5) class variables, local variables"
+"What is NullPointerException?","1) NullPointerException is thrown when calling the instance method of a null object or modifying/accessing field of a null object","2) NullPointerException is thrown when object is set as null","3) NullPointerException is thrown when object property is set as null","4) None of the above"
+"What is the default value of byte variable?","1) 0","2) 0.0","3) null","4) undefined"
