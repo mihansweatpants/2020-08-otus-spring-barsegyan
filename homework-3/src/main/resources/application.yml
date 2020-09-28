@@ -1,0 +1,4 @@
+application:
+  questions-file-name-en: "./questions_en.csv"
+  questions-file-name-ru: "./questions_ru_RU.csv"
+  locale: en
