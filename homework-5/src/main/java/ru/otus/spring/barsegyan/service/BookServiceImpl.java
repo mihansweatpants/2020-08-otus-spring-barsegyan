@@ -35,9 +35,12 @@ public class BookServiceImpl implements BookService {
     public void createBook(CreateBookDto createBookDto) {
         Genre genre = genreDao.findById(createBookDto.getGenreId());
         Author author = authorDao.findById(createBookDto.getAuthorId());
-        long bookId = bookDao.count() + 1;
 
-        bookDao.create(new Book(bookId, createBookDto.getTitle(), genre, author));
+        Book book = new Book();
+        book.setGenre(genre);
+        book.setAuthor(author);
+
+        bookDao.create(book);
     }
 
     @Override

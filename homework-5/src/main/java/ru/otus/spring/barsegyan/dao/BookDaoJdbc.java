@@ -40,9 +40,9 @@ public class BookDaoJdbc implements BookDao {
 
     @Override
     public void create(Book book) {
-        jdbc.update("insert into book (book_id, title, genre_id, author_id) values (:id, :title, :genre_id, :author_id)",
+        jdbc.update("insert into book (book_id, title, genre_id, author_id) " +
+                        "values ((select seq_book.nextval), :title, :genre_id, :author_id)",
                 Map.of(
-                        "id", book.getId(),
                         "title", book.getTitle(),
                         "genre_id", book.getGenre().getId(),
                         "author_id", book.getAuthor().getId()

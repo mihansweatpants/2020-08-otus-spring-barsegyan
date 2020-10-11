@@ -35,7 +35,7 @@ class BookDaoJdbcTest {
     void shouldFindAllBooks() {
         List<Book> expectedBookList = List.of(
                 new Book(1, "Test book", new Genre(1, "Test genre"), new Author(1, "Test author")),
-                new Book(3, "Delete me", new Genre(2, "Another genre"), new Author(1, "Test author"))
+                new Book(2, "Delete me", new Genre(2, "Another genre"), new Author(1, "Test author"))
         );
 
         List<Book> actualBookList = bookDaoJdbc.findAll();
@@ -64,12 +64,17 @@ class BookDaoJdbcTest {
     void shouldCreateBook() {
         Genre sampleGenre = new Genre(1, "Test genre");
         Author sampleAuthor = new Author(1, "Test author");
-        Book expectedBook = new Book(2, "Some book", sampleGenre, sampleAuthor);
+        Book newBook = new Book();
+        newBook.setTitle("Some book");
+        newBook.setGenre(sampleGenre);
+        newBook.setAuthor(sampleAuthor);
 
-        bookDaoJdbc.create(expectedBook);
-        Book actualBook = bookDaoJdbc.findById(expectedBook.getId());
+        bookDaoJdbc.create(newBook);
 
-        assertThat(actualBook).isEqualTo(expectedBook);
+        assertThat(bookDaoJdbc.findAll())
+                .anyMatch(book -> book.getTitle().equals(newBook.getTitle())
+                        && book.getAuthor().equals(newBook.getAuthor())
+                        && book.getGenre().equals(newBook.getGenre()));
     }
 
     @Test

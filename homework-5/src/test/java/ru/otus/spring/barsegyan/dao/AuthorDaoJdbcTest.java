@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import ru.otus.spring.barsegyan.domain.Author;
-import ru.otus.spring.barsegyan.domain.Book;
-import ru.otus.spring.barsegyan.domain.Genre;
 
 import java.util.List;
 
@@ -57,10 +55,12 @@ class AuthorDaoJdbcTest {
 
     @Test
     void create() {
-        Author newAuthor = new Author(3, "Tolstoy");
+        Author newAuthor = new Author();
+        newAuthor.setName("Tolstoy");
 
         authorDaoJdbc.create(newAuthor);
 
-        assertThat(authorDaoJdbc.findAll()).contains(newAuthor);
+        assertThat(authorDaoJdbc.findAll())
+                .anyMatch(author -> author.getName().equals(newAuthor.getName()));
     }
 }

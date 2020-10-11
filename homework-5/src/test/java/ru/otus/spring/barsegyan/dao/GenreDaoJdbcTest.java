@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
-import ru.otus.spring.barsegyan.domain.Author;
 import ru.otus.spring.barsegyan.domain.Genre;
 
 import java.util.List;
@@ -56,10 +55,12 @@ class GenreDaoJdbcTest {
 
     @Test
     void create() {
-        Genre newGenre = new Genre(3, "Novel");
+        Genre newGenre = new Genre();
+        newGenre.setName("Novel");
 
         genreDaoJdbc.create(newGenre);
 
-        assertThat(genreDaoJdbc.findAll()).contains(newGenre);
+        assertThat(genreDaoJdbc.findAll())
+                .anyMatch(genre -> genre.getName().equals(newGenre.getName()));
     }
 }

@@ -2,10 +2,12 @@ package ru.otus.spring.barsegyan.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Genre {
-    private final long id;
+    private long id;
     private String name;
 }

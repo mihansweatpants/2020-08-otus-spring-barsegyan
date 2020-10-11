@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.otus.spring.barsegyan.dao.mappers.AuthorMapper;
 import ru.otus.spring.barsegyan.domain.Author;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class AuthorDaoJdbc implements AuthorDao {
 
     @Override
     public void create(Author author) {
-        jdbc.update("insert into author (author_id, name) values (:author_id, :name)",
-                Map.of("author_id", author.getId(), "name", author.getName()));
+        jdbc.update("insert into author (author_id, name) values ((select seq_author.nextval), :name)",
+                Map.of("name", author.getName()));
     }
 }
