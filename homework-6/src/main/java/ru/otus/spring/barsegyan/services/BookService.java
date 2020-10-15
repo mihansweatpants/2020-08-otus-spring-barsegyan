@@ -41,7 +41,6 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public BookDto getBookById(long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Book with id=%s not found", id)));

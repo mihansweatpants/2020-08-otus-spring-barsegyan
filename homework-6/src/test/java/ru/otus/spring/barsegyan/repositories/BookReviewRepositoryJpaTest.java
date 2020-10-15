@@ -16,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("BookReviewRepositoryJpa should")
 class BookReviewRepositoryJpaTest {
 
-    private final static int EXPECTED_NUMBER_OF_FIRST_BOOK_REVIEWS = 2;
     private final static long FIRST_BOOK_REVIEW_ID = 1L;
     private final static long FIRST_BOOK_ID = 1L;
 
@@ -25,15 +24,6 @@ class BookReviewRepositoryJpaTest {
 
     @Autowired
     private BookReviewRepositoryJpa bookReviewRepositoryJpa;
-
-    @Test
-    @DisplayName("find all book reviews by book id")
-    void findAll() {
-        var bookReviews = bookReviewRepositoryJpa.findAllByBookId(FIRST_BOOK_ID);
-
-        assertThat(bookReviews).isNotNull().hasSize(EXPECTED_NUMBER_OF_FIRST_BOOK_REVIEWS)
-                .allMatch(bookReview -> !bookReview.getText().equals(""));
-    }
 
     @Test
     @DisplayName("find book review by id")

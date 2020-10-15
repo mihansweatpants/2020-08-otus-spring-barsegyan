@@ -28,7 +28,10 @@ public class BookReviewService {
 
     @Transactional(readOnly = true)
     public List<BookReviewDto> getAllReviewsByBookId(long bookId) {
-        return bookReviewRepository.findAllByBookId(bookId)
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new NotFoundException(String.format("Book with id=%s not found", bookId)));
+
+        return book.getReviews()
                 .stream()
                 .map(BookReviewDtoMapper::toDto)
                 .collect(Collectors.toList());
