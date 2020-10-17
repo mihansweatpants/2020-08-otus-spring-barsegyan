@@ -1,15 +1,6 @@
 package ru.otus.spring.barsegyan.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.otus.spring.barsegyan.domain.Book;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface BookRepository extends CrudRepository<Book, Long> {
-    List<Book> findAll();
-
-    Optional<Book> findById(long id);
-
-    void deleteById(long id);
-}
+public interface BookRepository extends JpaRepository<Book, Long> {}
