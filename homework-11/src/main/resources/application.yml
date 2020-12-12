@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      database: books-db
+
+mongock:
+  change-logs-scan-package:
+    - ru.otus.spring.barsegyan.changelog
+
+
