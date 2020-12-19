@@ -1,0 +1,4 @@
+Author(id=5fda342daf2e5928813b26eb, name=Достоевский Ф.М.)
+Author(id=5fda342daf2e5928813b26ed, name=Пушкин А.С.)
+Author(id=5fda342daf2e5928813b26ee, name=Станислав Лем)
+Author(id=5fda342daf2e5928813b26ec, name=Агата Кристи)
