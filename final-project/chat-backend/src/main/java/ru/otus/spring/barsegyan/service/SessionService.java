@@ -1,0 +1,59 @@
+package ru.otus.spring.barsegyan.service;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.Session;
+import org.springframework.session.SessionRepository;
+import org.springframework.stereotype.Service;
+import ru.otus.spring.barsegyan.type.AppUserDetails;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class SessionService {
+
+    private final FindByIndexNameSessionRepository<? extends Session> findByIndexNameSessionRepository;
+
+    public SessionService(FindByIndexNameSessionRepository<? extends Session> findByIndexNameSessionRepository) {
+        this.findByIndexNameSessionRepository = findByIndexNameSessionRepository;
+    }
+
+    public AppUserDetails getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return (AppUserDetails) principal;
+    }
+
+    public void invalidateSession(String sessionId) {
+        findByIndexNameSessionRepository.deleteById(sessionId);
+    }
+
+    public void invalidateAllSessions(String username) {
+        findByIndexNameSessionRepository
+                .findByPrincipalName(username)
+                .keySet()
+                .forEach(findByIndexNameSessionRepository::deleteById);
+    }
+
+    public List<? extends Session> getUserSessions(String username) {
+        return new ArrayList<>(findByIndexNameSessionRepository.findByPrincipalName(username).values());
+    }
+
+    public Session createSession(Authentication authentication) {
+        Session newSession = findByIndexNameSessionRepository.createSession();
+        newSession.setMaxInactiveInterval(Duration.ofHours(720));
+
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(authentication);
+
+        newSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
+        ((SessionRepository) findByIndexNameSessionRepository).save(newSession);
+
+        return newSession;
+    }
+}
