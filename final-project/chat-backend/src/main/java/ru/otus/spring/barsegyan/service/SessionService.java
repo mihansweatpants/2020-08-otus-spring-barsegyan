@@ -9,13 +9,16 @@ import org.springframework.session.Session;
 import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.barsegyan.type.AppUserDetails;
+import ru.otus.spring.barsegyan.util.UTCTimeUtils;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class SessionService {
+    private static final long MAX_MINUTES_FROM_LAST_ACTIVITY_TO_BE_ONLINE = 2;
 
     private final FindByIndexNameSessionRepository<? extends Session> findByIndexNameSessionRepository;
 
@@ -38,6 +41,22 @@ public class SessionService {
                 .findByPrincipalName(username)
                 .keySet()
                 .forEach(findByIndexNameSessionRepository::deleteById);
+    }
+
+    public boolean isUserOnline(String username) {
+        LocalDateTime now = UTCTimeUtils.now();
+
+        return findByIndexNameSessionRepository
+                .findByPrincipalName(username)
+                .values()
+                .stream()
+                .anyMatch(session -> {
+                    LocalDateTime lastAccessedTime = UTCTimeUtils.toDate(session.getLastAccessedTime());
+
+                    long minutesSinceLastActivity = Duration.between(lastAccessedTime, now).abs().toMinutes();
+
+                    return minutesSinceLastActivity < MAX_MINUTES_FROM_LAST_ACTIVITY_TO_BE_ONLINE;
+                });
     }
 
     public List<? extends Session> getUserSessions(String username) {
