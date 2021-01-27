@@ -1,5 +1,6 @@
 package ru.otus.spring.barsegyan.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import ru.otus.spring.barsegyan.service.AuthenticationService;
 
 import javax.validation.Valid;
 
+@Api
 @RestController
 public class AuthController {
     private final AuthenticationService authenticationService;
