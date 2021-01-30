@@ -33,8 +33,8 @@ public class ChatService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Chat> getChats() {
-        return null;
+    public List<Chat> getChatsByMemberId(UUID memberId) {
+        return chatRepository.findAllByMembers_Id(memberId);
     }
 
     @Transactional

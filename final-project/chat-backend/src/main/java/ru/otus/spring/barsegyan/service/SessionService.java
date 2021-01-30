@@ -8,6 +8,9 @@ import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Service;
+import ru.otus.spring.barsegyan.domain.AppUser;
+import ru.otus.spring.barsegyan.dto.rest.mappers.UserDtoMapper;
+import ru.otus.spring.barsegyan.dto.rest.response.UserDto;
 import ru.otus.spring.barsegyan.type.AppUserDetails;
 import ru.otus.spring.barsegyan.util.UTCTimeUtils;
 
@@ -15,10 +18,11 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SessionService {
-    private static final long MAX_MINUTES_FROM_LAST_ACTIVITY_TO_BE_ONLINE = 2;
+    private static final long MINUTES_SINCE_LAST_ACTIVITY_TO_BE_CONSIDERED_ONLINE = 1;
 
     private final FindByIndexNameSessionRepository<? extends Session> findByIndexNameSessionRepository;
 
@@ -55,8 +59,14 @@ public class SessionService {
 
                     long minutesSinceLastActivity = Duration.between(lastAccessedTime, now).abs().toMinutes();
 
-                    return minutesSinceLastActivity < MAX_MINUTES_FROM_LAST_ACTIVITY_TO_BE_ONLINE;
+                    return minutesSinceLastActivity <= MINUTES_SINCE_LAST_ACTIVITY_TO_BE_CONSIDERED_ONLINE;
                 });
+    }
+
+    public List<UserDto> mapOnlineStatus(List<AppUser> users) {
+        return users.stream()
+                .map(user -> UserDtoMapper.map(user, isUserOnline(user.getUsername())))
+                .collect(Collectors.toList());
     }
 
     public List<? extends Session> getUserSessions(String username) {
