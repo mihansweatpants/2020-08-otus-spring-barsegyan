@@ -17,6 +17,7 @@ import ru.otus.spring.barsegyan.util.UTCTimeUtils;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +64,7 @@ public class SessionService {
                 });
     }
 
-    public List<UserDto> mapOnlineStatus(List<AppUser> users) {
+    public List<UserDto> mapOnlineStatus(Collection<AppUser> users) {
         return users.stream()
                 .map(user -> UserDtoMapper.map(user, isUserOnline(user.getUsername())))
                 .collect(Collectors.toList());

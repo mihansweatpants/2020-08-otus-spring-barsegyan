@@ -2,7 +2,7 @@ package ru.otus.spring.barsegyan.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +20,7 @@ public class Chat {
     @JoinTable(name = "app_user_chat",
             joinColumns = @JoinColumn(name = "chat_id"),
             inverseJoinColumns =@JoinColumn(name = "app_user_id"))
-    private List<AppUser> members;
+    private Set<AppUser> members;
 
     @Column(name = "last_update_time")
     private LocalDateTime lastUpdateTime;
@@ -29,7 +29,7 @@ public class Chat {
 
     public Chat(UUID id,
                 String name,
-                List<AppUser> members,
+                Set<AppUser> members,
                 LocalDateTime lastUpdateTime) {
         this.id = id;
         this.name = name;
@@ -42,7 +42,7 @@ public class Chat {
         return this;
     }
 
-    public Chat setMembers(List<AppUser> members) {
+    public Chat setMembers(Set<AppUser> members) {
         this.members = members;
         return this;
     }
@@ -52,7 +52,7 @@ public class Chat {
         return this;
     }
 
-    public Chat addMembers(List<AppUser> newMembers) {
+    public Chat addMembers(Set<AppUser> newMembers) {
         members.addAll(newMembers);
         return this;
     }
@@ -65,7 +65,7 @@ public class Chat {
         return name;
     }
 
-    public List<AppUser> getMembers() {
+    public Set<AppUser> getMembers() {
         return members;
     }
 

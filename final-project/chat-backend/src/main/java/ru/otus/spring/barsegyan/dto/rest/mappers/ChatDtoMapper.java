@@ -9,6 +9,7 @@ import java.util.List;
 public class ChatDtoMapper {
     public static ChatDto map(Chat chat, List<UserDto> chatMembers) {
         return new ChatDto(
+                chat.getId(),
                 chat.getName(),
                 chatMembers,
                 chat.getLastUpdateTime()

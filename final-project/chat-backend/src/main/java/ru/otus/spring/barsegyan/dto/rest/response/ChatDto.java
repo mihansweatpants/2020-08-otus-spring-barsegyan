@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 public class ChatDto {
+    private final UUID id;
     private final String name;
-    private final List<UserDto> members;
+    private final Collection<UserDto> members;
     private final LocalDateTime lastUpdateTime;
 }

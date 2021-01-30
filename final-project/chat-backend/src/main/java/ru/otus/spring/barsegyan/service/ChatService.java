@@ -1,6 +1,5 @@
 package ru.otus.spring.barsegyan.service;
 
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.barsegyan.domain.AppUser;
@@ -13,6 +12,7 @@ import ru.otus.spring.barsegyan.util.UTCTimeUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -62,7 +62,7 @@ public class ChatService {
         Chat chat = chatRepository.findById(chatId).orElseThrow();
 
         // TODO notify about added users
-        List<AppUser> newMembers = userRepository.findAllByIdIn(userIds);
+        Set<AppUser> newMembers = userRepository.findAllByIdIn(userIds);
         chat.addMembers(newMembers);
         chat.setLastUpdateTime(UTCTimeUtils.now());
 
@@ -74,10 +74,10 @@ public class ChatService {
         Chat chat = chatRepository.findById(chatId).orElseThrow();
 
         // TODO notify about removed users
-        List<AppUser> updatedMembers = chat.getMembers()
+        Set<AppUser> updatedMembers = chat.getMembers()
                 .stream()
                 .filter(member -> !userIds.contains(member.getId()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
         chat
                 .setMembers(updatedMembers)
