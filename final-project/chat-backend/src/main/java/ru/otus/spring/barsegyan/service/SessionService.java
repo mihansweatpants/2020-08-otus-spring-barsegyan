@@ -70,6 +70,10 @@ public class SessionService {
                 .collect(Collectors.toList());
     }
 
+    public UserDto mapOnlineStatus(AppUser user) {
+        return UserDtoMapper.map(user, isUserOnline(user.getUsername()));
+    }
+
     public List<? extends Session> getUserSessions(String username) {
         return new ArrayList<>(findByIndexNameSessionRepository.findByPrincipalName(username).values());
     }

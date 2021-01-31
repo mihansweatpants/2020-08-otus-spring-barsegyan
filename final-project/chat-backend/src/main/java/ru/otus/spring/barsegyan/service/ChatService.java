@@ -8,7 +8,6 @@ import ru.otus.spring.barsegyan.dto.rest.request.CreateChatDto;
 import ru.otus.spring.barsegyan.dto.rest.request.UpdateChatDto;
 import ru.otus.spring.barsegyan.repository.ChatRepository;
 import ru.otus.spring.barsegyan.repository.UserRepository;
-import ru.otus.spring.barsegyan.util.UTCTimeUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,8 +40,7 @@ public class ChatService {
     public Chat createChat(CreateChatDto createChatDto) {
         Chat chat = new Chat()
                 .setName(createChatDto.getChatName())
-                .setMembers(userRepository.findAllByIdIn(createChatDto.getMemberIds()))
-                .setLastUpdateTime(UTCTimeUtils.now());
+                .setMembers(userRepository.findAllByIdIn(createChatDto.getMemberIds()));
 
         return chatRepository.save(chat);
     }
@@ -52,7 +50,6 @@ public class ChatService {
         Chat chat = chatRepository.findById(chatId).orElseThrow();
 
         Optional.ofNullable(updateChatDto.getName()).ifPresent(chat::setName);
-        chat.setLastUpdateTime(UTCTimeUtils.now());
 
         return chatRepository.save(chat);
     }
@@ -64,7 +61,6 @@ public class ChatService {
         // TODO notify about added users
         Set<AppUser> newMembers = userRepository.findAllByIdIn(userIds);
         chat.addMembers(newMembers);
-        chat.setLastUpdateTime(UTCTimeUtils.now());
 
         return chatRepository.save(chat);
     }
@@ -79,9 +75,7 @@ public class ChatService {
                 .filter(member -> !userIds.contains(member.getId()))
                 .collect(Collectors.toSet());
 
-        chat
-                .setMembers(updatedMembers)
-                .setLastUpdateTime(UTCTimeUtils.now());
+        chat.setMembers(updatedMembers);
 
         return chatRepository.save(chat);
     }

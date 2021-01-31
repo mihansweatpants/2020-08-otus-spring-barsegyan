@@ -21,7 +21,7 @@ public class ChatMessage {
     private Chat chat;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "app_user_id")
+    @JoinColumn(name = "sent_by")
     private AppUser sentBy;
 
     @Column(name = "sent_at")

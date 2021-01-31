@@ -1,7 +1,8 @@
 package ru.otus.spring.barsegyan.domain;
 
+import org.hibernate.annotations.JoinFormula;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -16,25 +17,33 @@ public class Chat {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "app_user_chat",
             joinColumns = @JoinColumn(name = "chat_id"),
-            inverseJoinColumns =@JoinColumn(name = "app_user_id"))
+            inverseJoinColumns = @JoinColumn(name = "app_user_id"))
     private Set<AppUser> members;
 
-    @Column(name = "last_update_time")
-    private LocalDateTime lastUpdateTime;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinFormula("(" +
+            "select cm.chat_message_id " +
+            "from chat_message cm " +
+            "where cm.chat_id = chat_id " +
+            "order by cm.sent_at desc " +
+            "limit 1" +
+            ")")
+    private ChatMessage lastMessage;
 
-    public Chat () {}
+    public Chat() {
+    }
 
     public Chat(UUID id,
                 String name,
                 Set<AppUser> members,
-                LocalDateTime lastUpdateTime) {
+                ChatMessage lastMessage) {
         this.id = id;
         this.name = name;
         this.members = members;
-        this.lastUpdateTime = lastUpdateTime;
+        this.lastMessage = lastMessage;
     }
 
     public Chat setName(String name) {
@@ -44,11 +53,6 @@ public class Chat {
 
     public Chat setMembers(Set<AppUser> members) {
         this.members = members;
-        return this;
-    }
-
-    public Chat setLastUpdateTime(LocalDateTime lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
         return this;
     }
 
@@ -69,7 +73,7 @@ public class Chat {
         return members;
     }
 
-    public LocalDateTime getLastUpdateTime() {
-        return lastUpdateTime;
+    public ChatMessage getLastMessage() {
+        return lastMessage;
     }
 }
