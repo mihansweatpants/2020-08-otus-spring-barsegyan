@@ -90,4 +90,12 @@ public class SessionService {
 
         return newSession;
     }
+
+    public Authentication getAuthentication(String token) {
+        Session session = findByIndexNameSessionRepository.findById(token);
+
+        SecurityContext securityContext = session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+
+        return securityContext.getAuthentication();
+    }
 }

@@ -18,13 +18,16 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
     private final UserRepository userRepository;
     private final ChatRepository chatRepository;
+    private final ChatMessageNotificationService chatMessageNotificationService;
 
     public ChatMessageService(ChatMessageRepository chatMessageRepository,
                               UserRepository userRepository,
-                              ChatRepository chatRepository) {
+                              ChatRepository chatRepository,
+                              ChatMessageNotificationService chatMessageNotificationService) {
         this.chatMessageRepository = chatMessageRepository;
         this.userRepository = userRepository;
         this.chatRepository = chatRepository;
+        this.chatMessageNotificationService = chatMessageNotificationService;
     }
 
     public Page<ChatMessage> getChatMessages(UUID chatId, Pageable pageable) {
@@ -41,6 +44,10 @@ public class ChatMessageService {
                 .setSentAt(UTCTimeUtils.now())
                 .setText(createMessageDto.getText());
 
-        return chatMessageRepository.save(chatMessage);
+        chatMessageRepository.save(chatMessage);
+
+        chatMessageNotificationService.notifyChatMembersOnNewMessage(chatMessage);
+
+        return chatMessage;
     }
 }
