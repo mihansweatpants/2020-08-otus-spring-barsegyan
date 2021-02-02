@@ -8,6 +8,8 @@ const LOGIN_ROUTE = '/login';
 export default abstract class HttpApi {
   protected http: AxiosInstance;
 
+  public static AUTH_TOKEN_LOCAL_STORAGE_KEY = 'authToken';
+
   constructor(protected basePath: string) {
     this.http = axios.create({
       baseURL: `${API_URL}${basePath}`,
@@ -22,7 +24,7 @@ export default abstract class HttpApi {
 
     this.http.interceptors.request.use(
       async (config) => {
-        config.headers['X-Auth-Token'] = localStorage.getItem('authToken');
+        config.headers['X-Auth-Token'] = localStorage.getItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY);
 
         return config;
       },

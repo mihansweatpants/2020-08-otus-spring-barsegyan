@@ -1,4 +1,4 @@
-import { UserDto } from './user';
+import { UserDto } from './users';
 
 export interface ChatDto {
   id: string;
