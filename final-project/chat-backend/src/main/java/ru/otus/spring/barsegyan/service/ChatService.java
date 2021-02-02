@@ -49,7 +49,7 @@ public class ChatService {
     public Chat updateChatById(UUID chatId, UpdateChatDto updateChatDto) {
         Chat chat = chatRepository.findById(chatId).orElseThrow();
 
-        Optional.ofNullable(updateChatDto.getName()).ifPresent(chat::setName);
+        Optional.ofNullable(updateChatDto.getChatName()).ifPresent(chat::setName);
 
         return chatRepository.save(chat);
     }

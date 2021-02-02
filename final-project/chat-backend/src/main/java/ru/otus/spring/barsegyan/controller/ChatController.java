@@ -39,7 +39,7 @@ public class ChatController {
         return ApiResponse.ok(ChatDtoMapper.map(chat, mapMembersToDto(chat)));
     }
 
-    @GetMapping
+    @GetMapping("/api/chats")
     public ApiResponse<List<ChatDto>> getAllUserChats() {
         AppUserDetails currentUser = sessionService.getCurrentUser();
 
@@ -66,7 +66,7 @@ public class ChatController {
         return ApiResponse.ok(ChatDtoMapper.map(chat, mapMembersToDto(chat)));
     }
 
-    @PostMapping("/api/chats/{chatId}/add-users")
+    @PostMapping("/api/chats/{chatId}/add-members")
     public ApiResponse<ChatDto> addMembers(@PathVariable UUID chatId,
                                            @RequestBody UpdateChatMembersDto updateChatMembersDto) {
         Chat chat = chatService.addMembers(chatId, updateChatMembersDto.getUserIds());
@@ -74,7 +74,7 @@ public class ChatController {
         return ApiResponse.ok(ChatDtoMapper.map(chat, mapMembersToDto(chat)));
     }
 
-    @PostMapping("/api/chats/{chatId}/remove-users")
+    @PostMapping("/api/chats/{chatId}/remove-members")
     public ApiResponse<ChatDto> removeMembers(@PathVariable UUID chatId,
                                               @RequestBody UpdateChatMembersDto updateChatMembersDto) {
         Chat chat = chatService.removeMembers(chatId, updateChatMembersDto.getUserIds());
