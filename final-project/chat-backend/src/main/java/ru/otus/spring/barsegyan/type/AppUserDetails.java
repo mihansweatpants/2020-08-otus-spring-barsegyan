@@ -6,10 +6,12 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.otus.spring.barsegyan.domain.AppUser;
 
+import java.io.Serializable;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.UUID;
 
-public class AppUserDetails implements UserDetails {
+public class AppUserDetails implements UserDetails, Principal, Serializable {
     private final UUID userId;
     private final String username;
     private final String email;
@@ -69,5 +71,12 @@ public class AppUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public String getName() {
+        return username;
+    }
+
+    private static final long serialVersionUID = 1L;
 }
 

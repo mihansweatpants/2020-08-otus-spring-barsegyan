@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateChatDto {
-    private String chatName;
+public class CreateMessageDto {
+    private String text;
 }

@@ -1,8 +1,7 @@
 create table chat
 (
     chat_id          uuid not null primary key,
-    name             text,
-    last_update_time timestamp
+    name             text
 );
 
 create table app_user_chat

@@ -17,6 +17,8 @@ import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class SwaggerConfig {
     @Bean
     public Docket customImplementation() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .ignoredParameterTypes(HttpServletResponse.class, HttpServletResponse.class)
+                .ignoredParameterTypes(HttpServletResponse.class, HttpServletResponse.class, HttpSession.class, Principal.class)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 .build()

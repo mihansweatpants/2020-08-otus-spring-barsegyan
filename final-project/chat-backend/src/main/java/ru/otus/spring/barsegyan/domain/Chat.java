@@ -1,8 +1,9 @@
 package ru.otus.spring.barsegyan.domain;
 
+import org.hibernate.annotations.JoinFormula;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,25 +17,33 @@ public class Chat {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "app_user_chat",
             joinColumns = @JoinColumn(name = "chat_id"),
-            inverseJoinColumns =@JoinColumn(name = "app_user_id"))
-    private List<AppUser> members;
+            inverseJoinColumns = @JoinColumn(name = "app_user_id"))
+    private Set<AppUser> members;
 
-    @Column(name = "last_update_time")
-    private LocalDateTime lastUpdateTime;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinFormula("(" +
+            "select cm.chat_message_id " +
+            "from chat_message cm " +
+            "where cm.chat_id = chat_id " +
+            "order by cm.sent_at desc " +
+            "limit 1" +
+            ")")
+    private ChatMessage lastMessage;
 
-    public Chat () {}
+    public Chat() {
+    }
 
     public Chat(UUID id,
                 String name,
-                List<AppUser> members,
-                LocalDateTime lastUpdateTime) {
+                Set<AppUser> members,
+                ChatMessage lastMessage) {
         this.id = id;
         this.name = name;
         this.members = members;
-        this.lastUpdateTime = lastUpdateTime;
+        this.lastMessage = lastMessage;
     }
 
     public Chat setName(String name) {
@@ -42,17 +51,12 @@ public class Chat {
         return this;
     }
 
-    public Chat setMembers(List<AppUser> members) {
+    public Chat setMembers(Set<AppUser> members) {
         this.members = members;
         return this;
     }
 
-    public Chat setLastUpdateTime(LocalDateTime lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
-        return this;
-    }
-
-    public Chat addMembers(List<AppUser> newMembers) {
+    public Chat addMembers(Set<AppUser> newMembers) {
         members.addAll(newMembers);
         return this;
     }
@@ -65,11 +69,11 @@ public class Chat {
         return name;
     }
 
-    public List<AppUser> getMembers() {
+    public Set<AppUser> getMembers() {
         return members;
     }
 
-    public LocalDateTime getLastUpdateTime() {
-        return lastUpdateTime;
+    public ChatMessage getLastMessage() {
+        return lastMessage;
     }
 }

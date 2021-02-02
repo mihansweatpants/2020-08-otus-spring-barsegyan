@@ -13,7 +13,7 @@ import java.util.*;
 public interface UserRepository extends JpaSpecificationExecutor<AppUser>, JpaRepository<AppUser, UUID> {
     Optional<AppUser> findByUsername(String username);
 
-    List<AppUser> findAllByIdIn(List<UUID> userIds);
+    Set<AppUser> findAllByIdIn(List<UUID> userIds);
 
     default Page<AppUser> findAllBySearchText(String searchText, Pageable pageable) {
         return findAll((Specification<AppUser>) (root, query, criteriaBuilder) -> {

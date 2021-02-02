@@ -14,4 +14,6 @@ public class SessionDetails implements Serializable {
 
     private String remoteAddr;
     private String userAgent;
+
+    private static final long serialVersionUID = 1L;
 }
