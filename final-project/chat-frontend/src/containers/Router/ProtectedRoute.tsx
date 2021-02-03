@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { RouteProps, Route, Redirect } from 'react-router-dom';
 
+import { Layout } from 'containers';
+
 import { useSelector } from 'store';
 
 const ProtectedRoute: FC<RouteProps> = ({
@@ -20,7 +22,9 @@ const ProtectedRoute: FC<RouteProps> = ({
         }
 
         return (
-          <Route {...props} children={children} component={component} render={render} />
+          <Layout>
+            <Route {...props} children={children} component={component} render={render} />
+          </Layout>
         );
       }}
     />

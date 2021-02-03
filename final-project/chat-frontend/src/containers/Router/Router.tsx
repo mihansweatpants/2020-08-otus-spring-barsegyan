@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import { AuthPage } from 'modules/auth/pages/AuthPage';
+import { MessengerView } from 'modules/messenger/pages/MessengerView';
 
 import GuestRoute from './GuestRoute';
 import ProtectedRoute from './ProtectedRoute';
@@ -14,9 +15,9 @@ const Router: FC = () => {
         <Switch>
           <GuestRoute path="/auth" exact component={AuthPage} />
 
-          <ProtectedRoute path="/" exact component={() => <>App</>} />
+          <ProtectedRoute path="/" exact component={MessengerView} />
 
-          <Route component={() => <>Not found</>} />
+          <Redirect to="/" />
         </Switch>
       </QueryParamProvider>
     </BrowserRouter>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ThemeProvider, CssBaseline, Container } from '@material-ui/core';
+import { ThemeProvider, CssBaseline } from '@material-ui/core';
 
 import { Router, SpinnerView } from 'containers';
 import { createStore } from 'store';
@@ -13,7 +13,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="lg">
         <SpinnerView resolve={preloadState} delay={500}>
           {(preloadedState) => (
             <Provider store={createStore(preloadedState)}>
@@ -21,7 +20,6 @@ function App() {
             </Provider>
           )}
         </SpinnerView>
-      </Container>
     </ThemeProvider>
   );
 }
