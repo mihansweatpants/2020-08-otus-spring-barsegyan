@@ -1,16 +1,17 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ThemeProvider, createMuiTheme, CssBaseline, Container } from '@material-ui/core';
+import { ThemeProvider, CssBaseline, Container } from '@material-ui/core';
 
 import { Router, SpinnerView } from 'containers';
 import { createStore } from 'store';
 import { preloadState } from 'store/preloadState';
 
+import { theme } from './theme';
 import './index.css';
 
 function App() {
   return (
-    <ThemeProvider theme={createMuiTheme()}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
         <SpinnerView resolve={preloadState} delay={500}>

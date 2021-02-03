@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { UsersApi, AuthApi, HttpApi, SessionsApi } from 'api';
-import { SignInDto } from 'api/types/auth';
+import { SignInDto, SignUpDto } from 'api/types/auth';
 import { UserDto } from 'api/types/users';
 
 import { AppThunk } from 'store';
@@ -37,6 +37,13 @@ export const fetchCurrentUser = (): AppThunk => async (dispatch) => {
 
 export const signIn = (credentials: SignInDto): AppThunk => async (dispatch) => {
   const authToken = await AuthApi.signIn(credentials);
+  localStorage.setItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY, authToken);
+
+  dispatch(fetchCurrentUser());
+};
+
+export const signUp = (credentials: SignUpDto): AppThunk => async (dispatch) => {
+  const authToken = await AuthApi.signUp(credentials);
   localStorage.setItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY, authToken);
 
   dispatch(fetchCurrentUser());
