@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 
 import { Paper } from '@material-ui/core';
 
-import { ChatsList } from 'modules/messenger/components';
+import { ChatsList, ChatContents } from 'modules/messenger/components';
 
 import { useDispatch } from 'store';
 import { fetchChats } from 'store/messenger/chatsSlice';
@@ -27,6 +27,7 @@ const MessengerView: FC = () => {
       </div>
 
       <div className={styles.chatContents}>
+        <ChatContents />
       </div>
     </Paper>
   );

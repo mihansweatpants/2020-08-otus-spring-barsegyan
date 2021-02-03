@@ -1,8 +1,11 @@
 import React, { FC } from 'react';
 
-import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Typography } from '@material-ui/core';
+import { List, ListItem, ListItemAvatar, Avatar, Typography } from '@material-ui/core';
 
-import { useSelector } from 'store';
+import { ChatDto } from 'api/types/chats';
+
+import { useSelector, useDispatch } from 'store';
+import { setSelectedChat } from 'store/messenger/chatsSlice';
 
 import { formatToShortTime } from 'utils/date';
 import { stringToHexColor } from 'utils/colors';
@@ -11,16 +14,31 @@ import { useStyles } from './styles';
 
 const MessengerView: FC = () => {
   const styles = useStyles();
+  const dispatch = useDispatch();
 
-  const chatsList = useSelector(state => state.chats.chatsList);
+  const { chatsList, selectedChat } = useSelector(state => state.chats);
+
+  const handleSetSelectedChat = (chat: ChatDto) => {
+    if (selectedChat?.id !== chat.id) {
+      dispatch(setSelectedChat(chat));
+    }
+  };
+
+  const isChatSelected = (chat: ChatDto) => chat.id === selectedChat?.id;
 
   return (
     <List disablePadding>
       {
         chatsList.map(chat => (
-          <ListItem key={chat.id} button className={styles.listItem}>
+          <ListItem
+            key={chat.id}
+            onClick={() => handleSetSelectedChat(chat)}
+            button
+            selected={isChatSelected(chat)}
+            className={styles.listItem}
+          >
             <ListItemAvatar className={styles.listItemAvatar}>
-              <Avatar className={styles.chatAvatar} style={{ backgroundColor: stringToHexColor(chat.name.slice(0, 5)) }}>
+              <Avatar className={styles.chatAvatar} style={{ backgroundColor: stringToHexColor(chat.name) }}>
                 {chat.name[0].toUpperCase()}
               </Avatar>
             </ListItemAvatar>

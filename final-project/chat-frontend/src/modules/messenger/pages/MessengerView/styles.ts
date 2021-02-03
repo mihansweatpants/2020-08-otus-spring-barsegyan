@@ -4,6 +4,7 @@ export const useStyles = makeStyles(theme => ({
   rootPaper: {
     height: '100%',
     display: 'flex',
+    borderRadius: theme.shape.borderRadius * 2,
   },
 
   chatsList: {
@@ -11,5 +12,7 @@ export const useStyles = makeStyles(theme => ({
     borderRight: `1px solid ${theme.palette.grey[200]}`
   },
 
-  chatContents: {},
+  chatContents: {
+    flexBasis: '70%',
+  },
 }));

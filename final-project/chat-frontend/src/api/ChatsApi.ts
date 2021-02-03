@@ -1,7 +1,8 @@
 import HttpApi from './HttpApi';
 
-import { ChatDto, CreateChatDto, UpdateChatDto } from 'api/types/chats';
+import { ChatDto, ChatMessageDto, CreateChatDto, UpdateChatDto } from 'api/types/chats';
 import { PaginationRequestParams } from 'api/types/base/request';
+import { PaginationResponse } from './types/base/response';
 
 class ChatsApi extends HttpApi {
   getAllUserChats = () => {
@@ -25,7 +26,7 @@ class ChatsApi extends HttpApi {
   };
 
   getChatMessages = (chatId: string, params: PaginationRequestParams) => {
-    return this.get(`/${chatId}/messages`, { params });
+    return this.get<PaginationResponse<ChatMessageDto>>(`/${chatId}/messages`, { params });
   };
 
   addMessageToChat = (chatId: string, text: string) => {
