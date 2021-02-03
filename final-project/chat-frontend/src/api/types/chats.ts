@@ -3,7 +3,7 @@ import { UserDto } from './users';
 export interface ChatDto {
   id: string;
   name: string;
-  lastMessage: ChatMessageDto;
+  lastMessage: ChatMessageDto | null;
   members: UserDto[];
 }
 

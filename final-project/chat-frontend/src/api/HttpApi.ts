@@ -93,7 +93,7 @@ export default abstract class HttpApi {
     catch (error) {
       const { response }: AxiosError = error;
 
-      if (response != null && response.status === 401 && window.location.pathname !== LOGIN_ROUTE) {
+      if (response != null && response.status === 403 && window.location.pathname !== LOGIN_ROUTE) {
         window.location.href = LOGIN_ROUTE;
       }
 

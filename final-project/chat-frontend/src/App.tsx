@@ -7,9 +7,11 @@ import { createStore } from 'store';
 import { preloadState } from 'store/preloadState';
 
 import { theme } from './theme';
-import './index.css';
+import { useGlobalStyles } from './index.styles';
 
 function App() {
+  useGlobalStyles();
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
