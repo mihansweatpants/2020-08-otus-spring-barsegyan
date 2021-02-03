@@ -2,6 +2,8 @@ import { format, differenceInCalendarDays } from 'date-fns';
 
 const UTC_OFFSET = new Date().getTimezoneOffset() / 60;
 
+console.log(differenceInCalendarDays);
+
 export const toLocalTime = (value: Date | string) => {
   const date = typeof value === 'string' ? new Date(value) : value;
 
@@ -12,9 +14,11 @@ export const formatToShortTime = (date: string | Date): string => {
   const dateToFormat = toLocalTime(date);
   const now = new Date();
 
-  if (differenceInCalendarDays(now, dateToFormat) > 1) {
-    return format(dateToFormat, 'iii');
-  }
+  const daysDiff = differenceInCalendarDays(now, dateToFormat);
 
-  return format(dateToFormat, 'HH:mm');
+  if (daysDiff === 0) return format(dateToFormat, 'HH:mm');
+
+  if (daysDiff < 7) return format(dateToFormat, 'iii HH:mm');
+
+  return format(dateToFormat, 'dd.MM.yy HH:mm');
 }

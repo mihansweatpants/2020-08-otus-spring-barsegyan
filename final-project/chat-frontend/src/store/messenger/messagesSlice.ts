@@ -14,6 +14,8 @@ interface State {
     page: number,
     limit: number,
   };
+  isLoadingList: boolean;
+  isSendingMessage: boolean;
 }
 
 const initialState: State = {
@@ -24,19 +26,37 @@ const initialState: State = {
     page: 0,
     limit: 100,
   },
+  isLoadingList: false,
+  isSendingMessage: false,
 };
 
 const auth = createSlice({
   name: 'chats',
   initialState,
   reducers: {
+    setMessagesListIsLoading(state) {
+      state.isLoadingList = true;
+    },
+
+    setMessagesListIsLoaded(state) {
+      state.isLoadingList = false;
+    },
+
+    setMessageIsSending(state) {
+      state.isSendingMessage = true;
+    },
+
+    setMessageIsSent(state) {
+      state.isSendingMessage = false;
+    },
+
     setMessagesList(state, { payload }: PayloadAction<PaginationResponse<ChatMessageDto>>) {
       state.messagesList.items = payload.items;
       state.messagesList.totalItems = payload.totalItems;
       state.messagesList.totalPages = payload.totalPages;
     },
 
-    pushNewMessage(state, { payload }: PayloadAction<ChatMessageDto>) {
+    pushRecievedMessage(state, { payload }: PayloadAction<ChatMessageDto>) {
       state.messagesList.items.push(payload);
 
       const updatedTotalItems = state.messagesList.totalItems + 1;
@@ -54,6 +74,11 @@ const auth = createSlice({
 export const {
   setMessagesList,
   resetMessagesListState,
+  setMessagesListIsLoading,
+  setMessagesListIsLoaded,
+  pushRecievedMessage,
+  setMessageIsSending,
+  setMessageIsSent
 } = auth.actions;
 
 export default auth.reducer;
@@ -61,7 +86,16 @@ export default auth.reducer;
 export const fetchMessages = (chatId: string): AppThunk => async (dispatch, getState) => {
   const { page, limit } = getState().messages.messagesList;
 
-  const messages = await ChatsApi.getChatMessages(chatId, { page, limit });
+  dispatch(setMessagesListIsLoading());
 
+  const messages = await ChatsApi.getChatMessages(chatId, { page, limit });
   dispatch(setMessagesList(messages));
+
+  dispatch(setMessagesListIsLoaded());
+};
+
+export const sendMessage = (chatId: string, text: string): AppThunk => async (dispatch) => {
+  dispatch(setMessageIsSending());
+  await ChatsApi.addMessageToChat(chatId, text);
+  dispatch(setMessageIsSent());
 };

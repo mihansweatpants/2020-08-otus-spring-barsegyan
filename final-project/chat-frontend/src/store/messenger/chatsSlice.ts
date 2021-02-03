@@ -35,7 +35,7 @@ const auth = createSlice({
 
     setSelectedChat(state, { payload }: PayloadAction<ChatDto>) {
       state.selectedChat = payload;
-    }
+    },
   },
 });
 

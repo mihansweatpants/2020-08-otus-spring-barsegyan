@@ -58,15 +58,19 @@ const MessengerView: FC = () => {
                 }
               </div>
 
-              <div className={styles.chatPreviewContent}>
-                <Typography display="inline" color="primary" className={styles.lastMessageSentBy}>
-                  {chat.lastMessage?.sentBy.username}:
-                </Typography>
-                {' '}
-                <Typography display="inline" className={styles.lastMessageTextPreview}>
-                  {chat.lastMessage?.text}
-                </Typography>
-              </div>
+              {
+                chat.lastMessage && (
+                  <div className={styles.chatPreviewContent}>
+                    <Typography display="inline" style={{ color: stringToHexColor(chat.lastMessage?.sentBy.username) }} className={styles.lastMessageSentBy}>
+                      {chat.lastMessage?.sentBy.username}:
+                    </Typography>
+                    {' '}
+                    <Typography display="inline" className={styles.lastMessageTextPreview}>
+                      {chat.lastMessage?.text}
+                    </Typography>
+                  </div>
+                )
+              }
             </div>
           </ListItem>
         ))

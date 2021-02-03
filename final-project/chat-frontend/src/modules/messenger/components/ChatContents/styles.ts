@@ -20,6 +20,7 @@ export const useStyles = makeStyles(theme => ({
 
   messagesList: {
     flex: 1,
+    overflow: 'hidden',
   },
 
   postMessage: {},
