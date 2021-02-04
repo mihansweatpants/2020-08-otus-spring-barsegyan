@@ -2,8 +2,6 @@ import { format, differenceInCalendarDays } from 'date-fns';
 
 const UTC_OFFSET = new Date().getTimezoneOffset() / 60;
 
-console.log(differenceInCalendarDays);
-
 export const toLocalTime = (value: Date | string) => {
   const date = typeof value === 'string' ? new Date(value) : value;
 

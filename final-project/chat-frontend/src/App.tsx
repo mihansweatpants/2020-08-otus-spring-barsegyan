@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 
-import { Router, SpinnerView } from 'containers';
+import { Router, SpinnerView, StompListener } from 'containers';
 import { createStore } from 'store';
 import { preloadState } from 'store/preloadState';
 
@@ -19,6 +19,7 @@ function App() {
           {(preloadedState) => (
             <Provider store={createStore(preloadedState)}>
               <Router />
+              <StompListener />
             </Provider>
           )}
         </SpinnerView>

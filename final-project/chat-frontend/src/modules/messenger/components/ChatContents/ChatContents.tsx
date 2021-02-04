@@ -14,7 +14,7 @@ const ChatContents: FC = () => {
   const dispatch = useDispatch();
 
   const { chatsList, selectedChat, isLoading: isChatsListLoading } = useSelector(state => state.chats);
-  const isMessagesListLoading = useSelector(state => state.messages.isLoading);
+  const isMessagesListLoading = useSelector(state => state.messages.isLoadingList);
 
   useEffect(
     () => {

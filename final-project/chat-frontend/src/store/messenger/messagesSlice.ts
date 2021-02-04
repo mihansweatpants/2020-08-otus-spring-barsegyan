@@ -57,7 +57,7 @@ const auth = createSlice({
     },
 
     pushRecievedMessage(state, { payload }: PayloadAction<ChatMessageDto>) {
-      state.messagesList.items.push(payload);
+      state.messagesList.items.unshift(payload);
 
       const updatedTotalItems = state.messagesList.totalItems + 1;
       state.messagesList.totalItems = updatedTotalItems;
