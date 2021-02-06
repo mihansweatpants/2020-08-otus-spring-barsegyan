@@ -9,6 +9,7 @@ export interface ChatDto {
 
 export interface ChatMessageDto {
   id: string;
+  chatId: string;
   sentAt: string;
   sentBy: UserDto;
   text: string;

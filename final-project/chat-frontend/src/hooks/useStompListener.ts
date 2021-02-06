@@ -4,7 +4,7 @@ import { StompClient } from 'api';
 import { StompMessage, StompMessageType } from 'api/types/base/stomp';
 
 import { useDispatch } from 'store';
-import { pushRecievedMessage } from 'store/messenger/messagesSlice';
+import { updateMessengerStateWithNewMessage } from 'store/messenger/messagesSlice';
 
 export const useStompListener = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export const useStompListener = () => {
       const onMessageRecieved = (message: StompMessage) => {
         switch (message.type) {
           case StompMessageType.NEW_CHAT_MESSAGE:
-            dispatch(pushRecievedMessage(message.payload));
+            dispatch(updateMessengerStateWithNewMessage(message.payload));
             break;
 
           default:

@@ -27,6 +27,10 @@ export const useStyles = makeStyles(theme => ({
 
   chatName: {
     fontWeight: theme.typography.fontWeightMedium,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '160px',
   },
 
   lastUpdateTime: {

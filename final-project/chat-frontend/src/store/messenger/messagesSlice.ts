@@ -6,6 +6,8 @@ import { ChatMessageDto } from 'api/types/chats';
 import { AppThunk } from 'store';
 import { PaginationResponse } from 'api/types/base/response';
 
+import { updateChatsListWithNewMessage } from './chatsSlice';
+
 interface State {
   messagesList: {
     items: ChatMessageDto[],
@@ -56,7 +58,7 @@ const auth = createSlice({
       state.messagesList.totalPages = payload.totalPages;
     },
 
-    pushRecievedMessage(state, { payload }: PayloadAction<ChatMessageDto>) {
+    pushNewMessage(state, { payload }: PayloadAction<ChatMessageDto>) {
       state.messagesList.items.unshift(payload);
 
       const updatedTotalItems = state.messagesList.totalItems + 1;
@@ -76,7 +78,7 @@ export const {
   resetMessagesListState,
   setMessagesListIsLoading,
   setMessagesListIsLoaded,
-  pushRecievedMessage,
+  pushNewMessage,
   setMessageIsSending,
   setMessageIsSent
 } = auth.actions;
@@ -98,4 +100,9 @@ export const sendMessage = (chatId: string, text: string): AppThunk => async (di
   dispatch(setMessageIsSending());
   await ChatsApi.addMessageToChat(chatId, text);
   dispatch(setMessageIsSent());
+};
+
+export const updateMessengerStateWithNewMessage = (message: ChatMessageDto): AppThunk => (dispatch) => {
+  dispatch(pushNewMessage(message));
+  dispatch(updateChatsListWithNewMessage(message));
 };

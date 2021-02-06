@@ -37,7 +37,7 @@ const PostMessageForm: FC = () => {
   };
 
   return (
-    <div onSubmit={handleSubmit} className={styles.root}>
+    <div className={styles.root}>
       <InputBase
         value={messageText}
         onChange={({ target: { value } }) => setMessageText(value)}
@@ -53,7 +53,7 @@ const PostMessageForm: FC = () => {
       />
 
       <IconButton
-        type="submit"
+        onClick={handleSubmit}
         disabled={isSendingMessage || !messageText}
         className={styles.iconButton}
       >
