@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
   listItem: {
     padding: theme.spacing(1.5),
-    borderTopLeftRadius: theme.shape.borderRadius * 2,
   },
 
   chatAvatar: {

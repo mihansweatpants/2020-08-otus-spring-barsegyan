@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: theme.shape.borderRadius * 2,
   },
 
-  chatsList: {
+  sidebar: {
     flexBasis: '30%',
     borderRight: `1px solid ${theme.palette.grey[200]}`
   },
@@ -15,4 +15,8 @@ export const useStyles = makeStyles(theme => ({
   chatContents: {
     flexBasis: '70%',
   },
+
+  createChat: {},
+
+  chatsList: {},
 }));
