@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef } from 'react';
+import React, { FC, useState } from 'react';
 
 import { InputBase, IconButton } from '@material-ui/core';
 import { SendRounded as SendRoundedIcon } from '@material-ui/icons';
@@ -15,13 +15,10 @@ const PostMessageForm: FC = () => {
   const chat = useSelector(state => state.chats.selectedChat!);
   const { isSendingMessage } = useSelector(state => state.messages);
 
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
-
   const [messageText, setMessageText] = useState('');
 
   const resetForm = () => {
     setMessageText('');
-    inputRef.current?.focus();
   };
 
   const handleSubmit = async () => {
@@ -49,7 +46,7 @@ const PostMessageForm: FC = () => {
         disabled={isSendingMessage}
         onKeyDown={handleKeyDown}
         autoFocus
-        ref={inputRef}
+        inputRef={input => input && input.focus()}
       />
 
       <IconButton

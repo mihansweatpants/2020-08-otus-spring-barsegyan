@@ -17,7 +17,7 @@ const initialState: State = {
   selectedChat: null,
 };
 
-const auth = createSlice({
+const chats = createSlice({
   name: 'chats',
   initialState,
   reducers: {
@@ -57,9 +57,9 @@ export const {
   setChatsListLoading,
   setChatsListLoaded,
   updateChatsListWithNewMessage,
-} = auth.actions;
+} = chats.actions;
 
-export default auth.reducer;
+export default chats.reducer;
 
 export const fetchChats = (): AppThunk => async (dispatch) => {
   dispatch(setChatsListLoading());

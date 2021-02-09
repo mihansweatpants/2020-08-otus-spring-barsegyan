@@ -26,14 +26,14 @@ const initialState: State = {
     totalItems: 0,
     totalPages: 0,
     page: 0,
-    limit: 100,
+    limit: 1000,
   },
   isLoadingList: false,
   isSendingMessage: false,
 };
 
-const auth = createSlice({
-  name: 'chats',
+const messages = createSlice({
+  name: 'messages',
   initialState,
   reducers: {
     setMessagesListIsLoading(state) {
@@ -52,6 +52,14 @@ const auth = createSlice({
       state.isSendingMessage = false;
     },
 
+    incrementMessagesPage(state) {
+      state.messagesList.page += 1;
+    },
+
+    decrementMessagesPage(state) {
+      state.messagesList.page -= 1;
+    },
+
     setMessagesList(state, { payload }: PayloadAction<PaginationResponse<ChatMessageDto>>) {
       state.messagesList.items = payload.items;
       state.messagesList.totalItems = payload.totalItems;
@@ -59,7 +67,9 @@ const auth = createSlice({
     },
 
     pushNewMessage(state, { payload }: PayloadAction<ChatMessageDto>) {
-      state.messagesList.items.unshift(payload);
+      if (state.messagesList.page === 0) {
+        state.messagesList.items.unshift(payload);
+      }
 
       const updatedTotalItems = state.messagesList.totalItems + 1;
       state.messagesList.totalItems = updatedTotalItems;
@@ -80,10 +90,12 @@ export const {
   setMessagesListIsLoaded,
   pushNewMessage,
   setMessageIsSending,
-  setMessageIsSent
-} = auth.actions;
+  setMessageIsSent,
+  incrementMessagesPage,
+  decrementMessagesPage,
+} = messages.actions;
 
-export default auth.reducer;
+export default messages.reducer;
 
 export const fetchMessages = (chatId: string): AppThunk => async (dispatch, getState) => {
   const { page, limit } = getState().messages.messagesList;

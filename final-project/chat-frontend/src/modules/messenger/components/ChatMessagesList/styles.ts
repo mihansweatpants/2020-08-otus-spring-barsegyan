@@ -5,7 +5,6 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column-reverse',
     height: '100%',
-    paddingBottom: theme.spacing(4),
     overflowY: 'auto',
   },
 
