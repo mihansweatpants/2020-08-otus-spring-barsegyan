@@ -9,6 +9,13 @@ export const useStyles = makeStyles(theme => ({
     overflowY: 'auto',
   },
 
+  empty: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   message: {
     padding: theme.spacing(2),
     display: 'flex',

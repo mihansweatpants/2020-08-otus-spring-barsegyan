@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Avatar, Typography } from '@material-ui/core';
+import { Avatar, Typography, CircularProgress } from '@material-ui/core';
 
 import { useSelector } from 'store';
 
@@ -12,12 +12,30 @@ import { useStyles } from './styles';
 const ChatMessagesList: FC = () => {
   const styles = useStyles();
 
-  const { messagesList } = useSelector(state => state.messages);
+  const { messagesList, isLoadingList } = useSelector(state => state.messages);
 
   return (
     <div className={styles.root}>
       {
-        messagesList.items.map(message => (
+        isLoadingList && (
+          <div className={styles.empty}>
+            <CircularProgress />
+          </div>
+        )
+      }
+
+      {
+        !isLoadingList && messagesList.totalItems === 0 && (
+          <div className={styles.empty}>
+            <Typography variant="h6" color="textSecondary">
+              No messages yet
+            </Typography>
+          </div>
+        )
+      }
+
+      {
+        !isLoadingList && messagesList.totalItems > 0 && messagesList.items.map(message => (
           <div key={message.id} className={styles.message}>
             <Avatar className={styles.userAvatar} style={{ backgroundColor: stringToHexColor(message.sentBy.username) }}>
               {message.sentBy.username[0].toUpperCase()}

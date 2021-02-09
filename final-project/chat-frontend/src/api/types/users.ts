@@ -1,7 +1,7 @@
 import { PaginationRequestParams } from "./base/request";
 
 export interface UserDto {
-  id: number;
+  id: string;
   username: string;
   email: string;
   isOnline: boolean;

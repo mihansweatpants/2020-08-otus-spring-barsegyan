@@ -24,6 +24,7 @@ export const useSelectUsersStyles = makeStyles(theme => ({
   searchInput: {
     width: 0,
     minWidth: '30px',
+    flex: 1,
     padding: theme.spacing(1, 0.5),
   },
 
@@ -31,5 +32,8 @@ export const useSelectUsersStyles = makeStyles(theme => ({
     margin: '3px',
   },
 
-  list: {},
+  list: {
+    maxHeight: '300px',
+    overflow: 'auto',
+  },
 }));

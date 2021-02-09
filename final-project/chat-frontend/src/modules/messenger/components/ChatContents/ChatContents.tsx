@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 
-import { Typography, CircularProgress } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import { ChatHeader, ChatMessagesList, PostMessageForm } from 'modules/messenger/components';
 
@@ -14,7 +14,6 @@ const ChatContents: FC = () => {
   const dispatch = useDispatch();
 
   const { chatsList, selectedChat, isLoading: isChatsListLoading } = useSelector(state => state.chats);
-  const isMessagesListLoading = useSelector(state => state.messages.isLoadingList);
 
   useEffect(
     () => {
@@ -25,30 +24,22 @@ const ChatContents: FC = () => {
     [dispatch, selectedChat],
   );
 
+  if (chatsList.length === 0 && !isChatsListLoading) {
+    return (
+      <div className={styles.empty}>
+        <Typography variant="h6" color="textSecondary">
+          No chats yeat. Create one
+        </Typography>
+      </div>
+    )
+  }
+
   if (!selectedChat) {
     return (
       <div className={styles.empty}>
         <Typography variant="h6" color="textSecondary">
           Select a chat to start messaging
         </Typography>
-      </div>
-    )
-  }
-
-  if (chatsList.length === 0 && !isChatsListLoading) {
-    return (
-      <div className={styles.empty}>
-        <Typography variant="h6" color="textSecondary">
-          No chats yeat. Create one (TODO)
-        </Typography>
-      </div>
-    )
-  }
-
-  if (selectedChat && isMessagesListLoading) {
-    return (
-      <div className={styles.empty}>
-        <CircularProgress />
       </div>
     )
   }

@@ -21,6 +21,7 @@ export const useStyles = makeStyles(theme => ({
   chatPreviewHeader: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'baseline',
     marginBottom: theme.spacing(0.5),
   },
 
@@ -29,7 +30,7 @@ export const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    maxWidth: '160px',
+    maxWidth: '135px',
   },
 
   lastUpdateTime: {

@@ -10,7 +10,7 @@ class ChatsApi extends HttpApi {
   };
 
   createChat = (data: CreateChatDto) => {
-    return this.post<ChatDto>('/');
+    return this.post<ChatDto>('/', data);
   };
 
   updateChat = (chatId: string, data: UpdateChatDto) => {

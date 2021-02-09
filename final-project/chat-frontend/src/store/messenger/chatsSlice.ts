@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ChatsApi } from 'api';
-import { ChatDto, ChatMessageDto } from 'api/types/chats';
+import { ChatDto, ChatMessageDto, CreateChatDto } from 'api/types/chats';
 
 import { AppThunk } from 'store';
 
@@ -41,7 +41,7 @@ const auth = createSlice({
       const updatedAndSortedChatsList = state.chatsList
           .map(chat => newMessage.chatId === chat.id ? ({ ...chat, lastMessage: newMessage }) : chat)
           .sort((prev, next) => {
-            if (prev.lastMessage == null || next.lastMessage == null) return -1;
+            if (prev.lastMessage == null || next.lastMessage == null) return 0;
 
             return +new Date(next.lastMessage.sentAt) - +new Date(prev.lastMessage.sentAt);
           });
@@ -68,4 +68,13 @@ export const fetchChats = (): AppThunk => async (dispatch) => {
   dispatch(setChatsList(chats));
 
   dispatch(setChatsListLoaded());
+};
+
+export const createChat = (data: CreateChatDto): AppThunk => async (dispatch, getState) => {
+  const newChat = await ChatsApi.createChat(data);
+
+  const existingChats = getState().chats.chatsList;
+
+  dispatch(setChatsList([newChat, ...existingChats]));
+  dispatch(setSelectedChat(newChat));
 };
