@@ -9,14 +9,26 @@ export const useStyles = makeStyles(theme => ({
 
   sidebar: {
     flexBasis: '30%',
-    borderRight: `1px solid ${theme.palette.grey[200]}`
+    borderRight: `1px solid ${theme.palette.grey[200]}`,
+    display: 'flex',
+    flexDirection: 'column',
   },
 
-  chatContents: {
+  main: {
     flexBasis: '70%',
   },
 
   createChat: {},
 
-  chatsList: {},
+  chatsList: {
+    overflow: 'auto',
+  },
+
+  settingsMenu: {
+    height: '100%',
+  },
+
+  sidebarTabs: {
+    borderTop: `1px solid ${theme.palette.grey[200]}`,
+  },
 }));

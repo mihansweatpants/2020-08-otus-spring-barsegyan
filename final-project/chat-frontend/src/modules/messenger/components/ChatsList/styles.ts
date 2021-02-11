@@ -1,6 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
+  listRoot: {
+    overflow: 'auto',
+  },
+
   listItem: {
     padding: theme.spacing(1.5),
   },
@@ -30,7 +34,7 @@ export const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    maxWidth: '135px',
+    maxWidth: '125px',
   },
 
   lastUpdateTime: {

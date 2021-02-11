@@ -12,7 +12,7 @@ import { stringToHexColor } from 'utils/colors';
 
 import { useStyles } from './styles';
 
-const MessengerView: FC = () => {
+const ChatsList: FC = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ const MessengerView: FC = () => {
   const isChatSelected = (chat: ChatDto) => chat.id === selectedChat?.id;
 
   return (
-    <List disablePadding>
+    <List className={styles.listRoot} disablePadding>
       {
         chatsList.map(chat => (
           <ListItem
@@ -79,4 +79,4 @@ const MessengerView: FC = () => {
   );
 };
 
-export default MessengerView;
+export default ChatsList;

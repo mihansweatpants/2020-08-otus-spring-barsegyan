@@ -7,12 +7,15 @@ export const useGlobalStyles = makeStyles(theme => ({
     },
 
     '*::-webkit-scrollbar': {
-      width: '0.4em',
+      width: '4px',
     },
     '*::-webkit-scrollbar-track': {
+      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
+      backgroundColor: theme.palette.grey[100],
     },
     '*::-webkit-scrollbar-thumb': {
-      borderRadius: '8px',
+      backgroundColor: theme.palette.grey[400],
+      borderRadius: '4px',
     }
   }
 }));

@@ -40,11 +40,7 @@ const chats = createSlice({
     updateChatsListWithNewMessage(state, { payload: newMessage }: PayloadAction<ChatMessageDto>) {
       const updatedAndSortedChatsList = state.chatsList
           .map(chat => newMessage.chatId === chat.id ? ({ ...chat, lastMessage: newMessage }) : chat)
-          .sort((prev, next) => {
-            if (prev.lastMessage == null || next.lastMessage == null) return 0;
-
-            return +new Date(next.lastMessage.sentAt) - +new Date(prev.lastMessage.sentAt);
-          });
+          .sort((prev, next) => new Date(next.lastMessage?.sentAt ?? 0).getTime() - new Date(prev.lastMessage?.sentAt ?? 0).getTime());
 
       state.chatsList = updatedAndSortedChatsList;
     },

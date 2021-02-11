@@ -1,8 +1,16 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { Paper } from '@material-ui/core';
 
-import { ChatsList, ChatContents, CreateNewChat } from 'modules/messenger/components';
+import {
+  ChatsList,
+  ChatContents,
+  CreateNewChat,
+  MessengerTabs,
+  MessengerTab,
+  UserSettings,
+  UserSettingsMenu,
+} from 'modules/messenger/components';
 
 import { useDispatch } from 'store';
 import { fetchChats } from 'store/messenger/chatsSlice';
@@ -20,19 +28,44 @@ const MessengerView: FC = () => {
     [dispatch],
   );
 
+  const [selectedTab, setSelectedTab] = useState(MessengerTab.Chats);
+
   return (
     <Paper className={styles.rootPaper}>
       <div className={styles.sidebar}>
-        <div className={styles.createChat}>
-          <CreateNewChat />
-        </div>
-        <div className={styles.chatsList}>
-          <ChatsList />
+        {
+          selectedTab === MessengerTab.Chats && (
+            <>
+              <div className={styles.createChat}>
+                <CreateNewChat />
+              </div>
+
+              <div className={styles.chatsList}>
+                <ChatsList />
+              </div>
+            </>
+          )
+        }
+
+        {
+          selectedTab === MessengerTab.Settings && (
+            <div className={styles.settingsMenu}>
+              <UserSettingsMenu />
+            </div>
+          )
+        }
+
+        <div className={styles.sidebarTabs}>
+          <MessengerTabs
+            selectedTab={selectedTab}
+            onChange={setSelectedTab}
+          />
         </div>
       </div>
 
-      <div className={styles.chatContents}>
-        <ChatContents />
+      <div className={styles.main}>
+        {selectedTab === MessengerTab.Chats && <ChatContents />}
+        {selectedTab === MessengerTab.Settings && <UserSettings />}
       </div>
     </Paper>
   );

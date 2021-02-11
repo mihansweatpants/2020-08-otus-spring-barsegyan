@@ -5,3 +5,6 @@ export { default as ChatMessagesList } from './ChatMessagesList';
 export { default as PostMessageForm } from './PostMessageForm';
 export { default as ChatForm } from './ChatForm';
 export { default as CreateNewChat } from './CreateNewChat';
+export { default as MessengerTabs, MessengerTab } from './MessengerTabs';
+export { default as UserSettings } from './UserSettings';
+export { default as UserSettingsMenu } from './UserSettingsMenu';
