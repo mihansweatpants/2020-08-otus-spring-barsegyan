@@ -8,3 +8,5 @@ export { default as CreateNewChat } from './CreateNewChat';
 export { default as MessengerTabs, MessengerTab } from './MessengerTabs';
 export { default as UserSettings } from './UserSettings';
 export { default as UserSettingsMenu } from './UserSettingsMenu';
+export { default as AccountSettings } from './AccountSettings';
+export { default as SessionsSettings } from './SessionsSettings';

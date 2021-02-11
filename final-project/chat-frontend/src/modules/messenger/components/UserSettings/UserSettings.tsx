@@ -1,15 +1,22 @@
 import React, { FC } from 'react';
 
+import { AccountSettings, SessionsSettings } from 'modules/messenger/components';
+
+import { useSelector } from 'store';
+import { SettingsSection } from 'store/settings/types';
+
 import { useStyles } from './styles';
 
-interface Props {
-}
-
-const UserSettings: FC<Props> = ({}) => {
+const UserSettings: FC = () => {
   const styles = useStyles();
 
+  const { selectedSection } = useSelector(state => state.settings);
+
   return (
-    <>UserSettings</>
+    <div className={styles.root}>
+      {selectedSection === SettingsSection.Account && <AccountSettings />}
+      {selectedSection === SettingsSection.Sessions && <SessionsSettings />}
+    </div>
   );
 };
 

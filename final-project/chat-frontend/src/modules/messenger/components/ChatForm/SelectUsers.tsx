@@ -114,10 +114,12 @@ const SelectUsers: FC<Props> = ({
                 <Badge
                   variant="dot"
                   invisible={!foundUser.isOnline}
+                  color="primary"
                   anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'right',
                   }}
+                  overlap="circle"
                 >
                   <Avatar style={{ backgroundColor: stringToHexColor(foundUser.username) }}>
                     {foundUser.username[0].toUpperCase()}

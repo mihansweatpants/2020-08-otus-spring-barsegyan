@@ -18,7 +18,7 @@ const MessagesListItem: FC<Props> = ({ message }) => {
 
   return (
     <div className={styles.message}>
-      <Avatar className={styles.userAvatar} style={{ backgroundColor: stringToHexColor(message.sentBy.username) }}>
+      <Avatar style={{ backgroundColor: stringToHexColor(message.sentBy.username) }}>
         {message.sentBy.username[0].toUpperCase()}
       </Avatar>
 

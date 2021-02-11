@@ -29,6 +29,7 @@ export const useStyles = makeStyles(theme => ({
   },
 
   sidebarTabs: {
+    marginTop: 'auto',
     borderTop: `1px solid ${theme.palette.grey[200]}`,
   },
 }));

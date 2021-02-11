@@ -22,11 +22,8 @@ export const useStyles = makeStyles(theme => ({
   },
 
   stretch: {
+    marginLeft: theme.spacing(2),
     width: '100%',
-  },
-
-  userAvatar: {
-    marginRight: theme.spacing(2),
   },
 
   messageHeader: {
