@@ -4,6 +4,7 @@ import { ChatsApi } from 'api';
 import { ChatDto, ChatMessageDto, CreateChatDto } from 'api/types/chats';
 
 import { AppThunk } from 'store';
+import { fetchReadMarks } from 'store/messenger/readMarksSlice';
 
 interface State {
   chatsList: ChatDto[];
@@ -70,6 +71,8 @@ export const createChat = (data: CreateChatDto): AppThunk => async (dispatch, ge
   const newChat = await ChatsApi.createChat(data);
 
   const existingChats = getState().chats.chatsList;
+
+  await dispatch(fetchReadMarks());
 
   dispatch(setChatsList([newChat, ...existingChats]));
   dispatch(setSelectedChat(newChat));

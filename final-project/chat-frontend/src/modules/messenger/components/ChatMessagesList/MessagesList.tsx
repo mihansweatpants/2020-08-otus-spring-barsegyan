@@ -71,8 +71,6 @@ const MessagesList: FC = () => {
     [getNextPageOfMessages, getPreviousPageOfMessages],
   );
 
-  console.log({totalItems: messagesList.totalItems, isLoadingList});
-
   if (messagesList.totalItems === 0 && isLoadingList) {
     return (
       <div className={styles.empty}>

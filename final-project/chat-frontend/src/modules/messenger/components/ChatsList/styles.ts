@@ -42,6 +42,12 @@ export const useStyles = makeStyles(theme => ({
     fontSize: '14px'
   },
 
+  lastMessage: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
   lastMessageSentBy: {
     fontSize: '14px'
   },
@@ -55,5 +61,12 @@ export const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     maxWidth: '160px',
+  },
+
+  unreadBadge: {
+    height: '10px',
+    width: '10px',
+    backgroundColor: theme.palette.primary.light,
+    borderRadius: '50%',
   },
 }));

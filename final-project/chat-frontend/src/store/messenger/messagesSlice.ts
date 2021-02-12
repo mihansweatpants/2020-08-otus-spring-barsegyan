@@ -114,7 +114,12 @@ export const sendMessage = (chatId: string, text: string): AppThunk => async (di
   dispatch(setMessageIsSent());
 };
 
-export const updateMessengerStateWithNewMessage = (message: ChatMessageDto): AppThunk => (dispatch) => {
-  dispatch(pushNewMessage(message));
+export const updateMessengerStateWithNewMessage = (message: ChatMessageDto): AppThunk => (dispatch, getState) => {
   dispatch(updateChatsListWithNewMessage(message));
+
+  const { selectedChat } = getState().chats;
+
+  if (selectedChat?.id === message.chatId) {
+    dispatch(pushNewMessage(message));
+  }
 };

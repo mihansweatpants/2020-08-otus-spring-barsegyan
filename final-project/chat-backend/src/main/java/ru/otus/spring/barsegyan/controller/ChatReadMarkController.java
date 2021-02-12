@@ -3,6 +3,7 @@ package ru.otus.spring.barsegyan.controller;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.spring.barsegyan.domain.ChatReadMark;
+import ru.otus.spring.barsegyan.dto.rest.base.ApiResponse;
 import ru.otus.spring.barsegyan.dto.rest.mappers.ChatReadMarkDtoMapper;
 import ru.otus.spring.barsegyan.dto.rest.response.ChatReadMarkDto;
 import ru.otus.spring.barsegyan.service.ChatReadMarkService;
@@ -27,19 +28,19 @@ public class ChatReadMarkController {
     }
 
     @GetMapping("/api/read-marks")
-    public List<ChatReadMarkDto> getUserReadMarks() {
+    public ApiResponse<List<ChatReadMarkDto>> getUserReadMarks() {
         AppUserDetails currentUser = sessionService.getCurrentUser();
 
-        return chatReadMarkService.getAllUserReadMarks(currentUser.getUserId())
+        return ApiResponse.ok(chatReadMarkService.getAllUserReadMarks(currentUser.getUserId())
                 .stream()
                 .map(ChatReadMarkDtoMapper::map)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @PostMapping("/api/read-marks/{readMarkId}")
-    public ChatReadMarkDto markLastReadMessage(@PathVariable UUID readMarkId, @RequestParam UUID messageId) {
+    public ApiResponse<ChatReadMarkDto> markLastReadMessage(@PathVariable UUID readMarkId, @RequestParam UUID messageId) {
         ChatReadMark updatedReadMark = chatReadMarkService.markLastReadMessage(readMarkId, messageId);
 
-        return ChatReadMarkDtoMapper.map(updatedReadMark);
+        return ApiResponse.ok(ChatReadMarkDtoMapper.map(updatedReadMark));
     }
 }

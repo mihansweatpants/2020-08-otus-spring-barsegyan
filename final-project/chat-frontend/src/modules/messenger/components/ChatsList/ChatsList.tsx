@@ -17,6 +17,7 @@ const ChatsList: FC = () => {
   const dispatch = useDispatch();
 
   const { chatsList, selectedChat } = useSelector(state => state.chats);
+  const { readMarksByChatId } = useSelector(state => state.readMarks);
 
   const handleSetSelectedChat = (chat: ChatDto) => {
     if (selectedChat?.id !== chat.id) {
@@ -60,14 +61,22 @@ const ChatsList: FC = () => {
 
               {
                 chat.lastMessage && (
-                  <div className={styles.chatPreviewContent}>
-                    <Typography display="inline" style={{ color: stringToHexColor(chat.lastMessage?.sentBy.username) }} className={styles.lastMessageSentBy}>
-                      {chat.lastMessage?.sentBy.username}:
-                    </Typography>
-                    {' '}
-                    <Typography display="inline" className={styles.lastMessageTextPreview}>
-                      {chat.lastMessage?.text}
-                    </Typography>
+                  <div className={styles.lastMessage}>
+                    <div className={styles.chatPreviewContent}>
+                      <Typography display="inline" style={{ color: stringToHexColor(chat.lastMessage?.sentBy.username) }} className={styles.lastMessageSentBy}>
+                        {chat.lastMessage?.sentBy.username}:
+                      </Typography>
+                      {' '}
+                      <Typography display="inline" className={styles.lastMessageTextPreview}>
+                        {chat.lastMessage?.text}
+                      </Typography>
+                    </div>
+
+                    {
+                      readMarksByChatId[chat.id].lastReadMessageId !== chat.lastMessage.id && (
+                        <div className={styles.unreadBadge} />
+                      )
+                    }
                   </div>
                 )
               }

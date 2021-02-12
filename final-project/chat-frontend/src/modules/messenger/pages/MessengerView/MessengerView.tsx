@@ -14,6 +14,7 @@ import {
 
 import { useDispatch } from 'store';
 import { fetchChats } from 'store/messenger/chatsSlice';
+import { fetchReadMarks } from 'store/messenger/readMarksSlice';
 
 import { useStyles } from './styles';
 
@@ -24,6 +25,7 @@ const MessengerView: FC = () => {
   useEffect(
     () => {
       dispatch(fetchChats());
+      dispatch(fetchReadMarks());
     },
     [dispatch],
   );
