@@ -22,11 +22,16 @@ const auth = createSlice({
     setCurrentUser(state, { payload }: PayloadAction<UserDto | null>) {
       state.user = payload;
     },
+
+    clearCurrentUser(state) {
+      state.user = null;
+    }
   },
 });
 
 export const {
   setCurrentUser,
+  clearCurrentUser
 } = auth.actions;
 
 export default auth.reducer;
@@ -56,5 +61,5 @@ export const signOut = (): AppThunk => async (dispatch) => {
   await dispatch(revokeSession(sessionId));
 
   localStorage.removeItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY)!;
-  dispatch(setCurrentUser(null));
+  dispatch(clearCurrentUser());
 };

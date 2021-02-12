@@ -73,7 +73,7 @@ const ChatsList: FC = () => {
                     </div>
 
                     {
-                      readMarksByChatId[chat.id].lastReadMessageId !== chat.lastMessage.id && (
+                      readMarksByChatId[chat.id]?.lastReadMessageId !== chat.lastMessage.id && (
                         <div className={styles.unreadBadge} />
                       )
                     }

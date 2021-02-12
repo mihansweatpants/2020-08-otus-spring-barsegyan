@@ -6,31 +6,33 @@ import HttpApi from './HttpApi';
 const WS_URL = process.env.REACT_APP_WS_URL;
 
 export class StompService {
-  private client: Client;
-  private static instance: StompService;
-  private authToken: string = localStorage.getItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY) ?? '';
+  private static instance: StompService | null;
 
-  constructor(wsUri) {
+  private client: Client;
+
+  constructor() {
     this.client = new Client({
-      brokerURL: wsUri,
-      connectHeaders: {
-        'X-Auth-Token': this.authToken,
-      },
+      brokerURL: WS_URL,
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
     });
   }
 
-  static getInstance(wsUri) {
+  static getInstance() {
     if (!StompService.instance) {
-      StompService.instance = new StompService(wsUri);
+      StompService.instance = new StompService();
     }
+
     return StompService.instance;
   }
 
+  private getConnectHeaders = () => ({
+    'X-Auth-Token': localStorage.getItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY) ?? '',
+  });
+
   connect = (onMessageRecieved: (message: StompMessage) => void) => {
-    const isAuthentiated = Boolean(this.authToken);
+    this.client.connectHeaders = this.getConnectHeaders();
 
     this.client.onConnect = () => {
       this.client.subscribe('/user/queue/updates', (message) => {
@@ -38,10 +40,15 @@ export class StompService {
       });
     };
 
-    if (isAuthentiated) {
-      this.client.activate();
+    this.client.activate();
+  };
+
+  disconnect = () => {
+    if (this.client.active) {
+      this.client.deactivate();
+      StompService.instance = null;
     }
-  }
+  };
 }
 
-export default StompService.getInstance(WS_URL);
+export default StompService;

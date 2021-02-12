@@ -31,7 +31,7 @@ const chats = createSlice({
     },
 
     setChatsList(state, { payload }: PayloadAction<ChatDto[]>) {
-      state.chatsList = payload;
+      state.chatsList = sortByLastSentMessage(payload);
     },
 
     setSelectedChat(state, { payload }: PayloadAction<ChatDto>) {
@@ -39,14 +39,22 @@ const chats = createSlice({
     },
 
     updateChatsListWithNewMessage(state, { payload: newMessage }: PayloadAction<ChatMessageDto>) {
-      const updatedAndSortedChatsList = state.chatsList
-          .map(chat => newMessage.chatId === chat.id ? ({ ...chat, lastMessage: newMessage }) : chat)
-          .sort((prev, next) => new Date(next.lastMessage?.sentAt ?? 0).getTime() - new Date(prev.lastMessage?.sentAt ?? 0).getTime());
+      const updatedChatsList = state.chatsList
+          .map(chat => newMessage.chatId === chat.id ? ({ ...chat, lastMessage: newMessage }) : chat);
 
-      state.chatsList = updatedAndSortedChatsList;
+      const sortedChatsList = sortByLastSentMessage(updatedChatsList);
+
+      state.chatsList = sortedChatsList;
     },
   },
 });
+
+const sortByLastSentMessage = (chats: ChatDto[]) =>
+  chats.sort(
+    (prev, next) =>
+      new Date(next.lastMessage?.sentAt ?? 0).getTime() -
+      new Date(prev.lastMessage?.sentAt ?? 0).getTime()
+  );
 
 export const {
   setChatsList,

@@ -7,6 +7,8 @@ import MessagesList from './MessagesList';
 import { useSelector, useDispatch } from 'store';
 import { markLastReadMessage } from 'store/messenger/readMarksSlice';
 
+import { useBrowserTabFocusContext } from 'hooks/useBrowserTabFocus';
+
 import { useStyles } from './styles';
 
 const ChatMessagesList: FC = () => {
@@ -15,15 +17,17 @@ const ChatMessagesList: FC = () => {
 
   const { messagesList, isLoadingList } = useSelector(state => state.messages);
 
+  const { isBrowserTabFocused } = useBrowserTabFocusContext();
+
   useEffect(
     () => {
-      if (messagesList.items.length > 0) {
+      if (isBrowserTabFocused && messagesList.items.length > 0) {
         const lastReadMessage = first(messagesList.items)!;
 
         setTimeout(() => dispatch(markLastReadMessage(lastReadMessage.chatId, lastReadMessage.id)), 200);
       }
     },
-    [messagesList, dispatch],
+    [messagesList, isBrowserTabFocused, dispatch],
   );
 
   return (
