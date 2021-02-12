@@ -3,9 +3,11 @@ package ru.otus.spring.barsegyan.controller;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.spring.barsegyan.dto.rest.base.ApiResponse;
 import ru.otus.spring.barsegyan.dto.rest.mappers.SessionDtoMapper;
+import ru.otus.spring.barsegyan.dto.rest.request.InvalidateSessionsDto;
 import ru.otus.spring.barsegyan.dto.rest.response.SessionDto;
 import ru.otus.spring.barsegyan.service.SessionService;
 
@@ -35,7 +37,7 @@ public class SessionController {
                         .collect(Collectors.toList()));
     }
 
-    @PostMapping("/api/sessions/logout")
+    @PostMapping("/api/sessions/logout-current")
     public ApiResponse<Void> invalidateCurrentSession(HttpSession httpSession) {
         sessionService.invalidateSession(httpSession.getId());
 
@@ -43,8 +45,8 @@ public class SessionController {
     }
 
     @PostMapping("/api/sessions/logout-all")
-    public ApiResponse<Void> invalidateAllSessions(Principal principal) {
-        sessionService.invalidateAllSessions(principal.getName());
+    public ApiResponse<Void> invalidateSessions(@RequestBody InvalidateSessionsDto invalidateSessionsDto) {
+        invalidateSessionsDto.getSessionIds().forEach(sessionService::invalidateSession);
 
         return ApiResponse.ok();
     }

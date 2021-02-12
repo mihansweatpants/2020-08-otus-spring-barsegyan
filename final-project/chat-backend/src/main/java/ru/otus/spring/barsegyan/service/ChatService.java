@@ -19,11 +19,14 @@ import java.util.stream.Collectors;
 public class ChatService {
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
+    private final ChatReadMarkService chatReadMarkService;
 
     public ChatService(ChatRepository chatRepository,
-                       UserRepository userRepository) {
+                       UserRepository userRepository,
+                       ChatReadMarkService chatReadMarkService) {
         this.chatRepository = chatRepository;
         this.userRepository = userRepository;
+        this.chatReadMarkService = chatReadMarkService;
     }
 
     @Transactional(readOnly = true)
@@ -42,7 +45,10 @@ public class ChatService {
                 .setName(createChatDto.getChatName())
                 .setMembers(userRepository.findAllByIdIn(createChatDto.getMemberIds()));
 
-        return chatRepository.save(chat);
+        chatRepository.save(chat);
+        chatReadMarkService.createReadMarksForChatMembers(chat, chat.getMembers());
+
+        return chat;
     }
 
     @Transactional
@@ -62,7 +68,10 @@ public class ChatService {
         Set<AppUser> newMembers = userRepository.findAllByIdIn(userIds);
         chat.addMembers(newMembers);
 
-        return chatRepository.save(chat);
+        chatRepository.save(chat);
+        chatReadMarkService.createReadMarksForChatMembers(chat, newMembers);
+
+        return chat;
     }
 
     @Transactional
@@ -70,13 +79,16 @@ public class ChatService {
         Chat chat = chatRepository.findById(chatId).orElseThrow();
 
         // TODO notify about removed users
-        Set<AppUser> updatedMembers = chat.getMembers()
+        Set<AppUser> membersToRemove = chat.getMembers()
                 .stream()
-                .filter(member -> !userIds.contains(member.getId()))
+                .filter(member -> userIds.contains(member.getId()))
                 .collect(Collectors.toSet());
 
-        chat.setMembers(updatedMembers);
+        chat.getMembers().removeAll(membersToRemove);
+        chatRepository.save(chat);
 
-        return chatRepository.save(chat);
+        chatReadMarkService.deleteReadMarksForChatMembers(chat, membersToRemove);
+
+        return chat;
     }
 }

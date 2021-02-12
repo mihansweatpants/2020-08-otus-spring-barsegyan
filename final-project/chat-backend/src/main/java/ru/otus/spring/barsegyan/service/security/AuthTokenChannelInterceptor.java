@@ -35,7 +35,7 @@ public class AuthTokenChannelInterceptor implements ChannelInterceptor {
             AppUserDetails user = (AppUserDetails) authentication.getPrincipal();
             accessor.setUser(user);
 
-            logger.info("Established connection for user {}", user.getUsername());
+            logger.info("Established WebSocket connection for user {}", user.getUsername());
         }
         return message;
     }

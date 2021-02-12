@@ -13,4 +13,5 @@ public class ChatMessageDto {
     private final UserDto sentBy;
     private final LocalDateTime sentAt;
     private final String text;
+    private final UUID chatId;
 }
