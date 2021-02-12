@@ -2,7 +2,6 @@ import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse, 
 import qs from 'query-string';
 import { BasepApiResponse } from 'api/types/base/response';
 
-const API_URL = process.env.REACT_APP_API_URL || '';
 const LOGIN_ROUTE = '/login';
 
 export default abstract class HttpApi {
@@ -12,7 +11,7 @@ export default abstract class HttpApi {
 
   constructor(protected basePath: string) {
     this.http = axios.create({
-      baseURL: `${API_URL}${basePath}`,
+      baseURL: basePath,
       timeout: 90000,
       paramsSerializer(params) {
         return qs.stringify(params, { arrayFormat: 'none' });

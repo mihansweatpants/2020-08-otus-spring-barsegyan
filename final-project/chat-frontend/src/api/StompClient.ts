@@ -3,8 +3,6 @@ import { Client } from '@stomp/stompjs';
 import { StompMessage } from 'api/types/base/stomp';
 import HttpApi from './HttpApi';
 
-const WS_URL = process.env.REACT_APP_WS_URL;
-
 export class StompService {
   private static instance: StompService | null;
 
@@ -12,7 +10,7 @@ export class StompService {
 
   constructor() {
     this.client = new Client({
-      brokerURL: WS_URL,
+      brokerURL: this.constructWSUrl('/ws'),
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
@@ -26,10 +24,6 @@ export class StompService {
 
     return StompService.instance;
   }
-
-  private getConnectHeaders = () => ({
-    'X-Auth-Token': localStorage.getItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY) ?? '',
-  });
 
   connect = (onMessageRecieved: (message: StompMessage) => void) => {
     this.client.connectHeaders = this.getConnectHeaders();
@@ -49,6 +43,15 @@ export class StompService {
       StompService.instance = null;
     }
   };
+
+  private getConnectHeaders = () => ({
+    'X-Auth-Token': localStorage.getItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY) ?? '',
+  });
+
+  private constructWSUrl(path): string {
+    const protocolPrefix = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
+    return `${protocolPrefix}//${window.location.host}${path}`;
+  }
 }
 
 export default StompService;
