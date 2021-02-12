@@ -66,7 +66,7 @@ export const useStyles = makeStyles(theme => ({
   unreadBadge: {
     height: '10px',
     width: '10px',
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: '50%',
   },
 }));

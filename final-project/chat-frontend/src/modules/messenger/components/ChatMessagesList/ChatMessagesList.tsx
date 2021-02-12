@@ -15,6 +15,7 @@ const ChatMessagesList: FC = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
+  const { id: currentUserId } = useSelector(state => state.auth.user!);
   const { messagesList, isLoadingList } = useSelector(state => state.messages);
 
   const { isBrowserTabFocused } = useBrowserTabFocusContext();
@@ -24,10 +25,17 @@ const ChatMessagesList: FC = () => {
       if (isBrowserTabFocused && messagesList.items.length > 0) {
         const lastReadMessage = first(messagesList.items)!;
 
-        setTimeout(() => dispatch(markLastReadMessage(lastReadMessage.chatId, lastReadMessage.id)), 200);
+        const markMessage = () => dispatch(markLastReadMessage(lastReadMessage.chatId, lastReadMessage.id));
+
+        if (lastReadMessage.sentBy.id === currentUserId) {
+          markMessage();
+        }
+        else {
+          setTimeout(markMessage, 200);
+        }
       }
     },
-    [messagesList, isBrowserTabFocused, dispatch],
+    [currentUserId, messagesList, isBrowserTabFocused, dispatch],
   );
 
   return (

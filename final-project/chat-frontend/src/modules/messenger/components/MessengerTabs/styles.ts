@@ -9,4 +9,8 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: 0,
     flex: 1,
   },
+
+  unreadBadge: {
+    backgroundColor: theme.palette.primary.light,
+  },
 }));
