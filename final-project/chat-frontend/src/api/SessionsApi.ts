@@ -7,12 +7,12 @@ class SessionsApi extends HttpApi {
     return this.get<SessionDto[]>('/');
   };
 
-  logout = () => {
+  logoutCurrent = () => {
     return this.post<void>('/logout');
   };
 
-  logoutAll = () => {
-    return this.post<void>('/logout-all')
+  logoutAll = (sessionIds: string[]) => {
+    return this.post<void>('/logout-all', { sessionIds })
   };
 }
 

@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { UsersApi, AuthApi, HttpApi, SessionsApi } from 'api';
+import { UsersApi, AuthApi, HttpApi } from 'api';
 import { SignInDto, SignUpDto } from 'api/types/auth';
 import { UserDto } from 'api/types/users';
 
 import { AppThunk } from 'store';
+import { revokeSession } from 'store/settings/sessionsSlice';
 
 interface State {
   user: UserDto | null;
@@ -50,8 +51,10 @@ export const signUp = (credentials: SignUpDto): AppThunk => async (dispatch) => 
 };
 
 export const signOut = (): AppThunk => async (dispatch) => {
-  await SessionsApi.logout();
-  localStorage.removeItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY);
+  const sessionId = localStorage.getItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY)!;
 
+  await dispatch(revokeSession(sessionId));
+
+  localStorage.removeItem(HttpApi.AUTH_TOKEN_LOCAL_STORAGE_KEY)!;
   dispatch(setCurrentUser(null));
 };

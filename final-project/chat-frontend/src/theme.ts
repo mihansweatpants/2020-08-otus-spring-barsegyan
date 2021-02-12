@@ -6,5 +6,10 @@ export const theme = createMuiTheme({
       main: '#6a45ff',
       dark: '#7d60ff',
     }
-  }
+  },
+  typography: {
+    button: {
+      textTransform: 'none',
+    },
+  },
 });

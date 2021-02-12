@@ -41,13 +41,6 @@ public class SessionService {
         findByIndexNameSessionRepository.deleteById(sessionId);
     }
 
-    public void invalidateAllSessions(String username) {
-        findByIndexNameSessionRepository
-                .findByPrincipalName(username)
-                .keySet()
-                .forEach(findByIndexNameSessionRepository::deleteById);
-    }
-
     public boolean isUserOnline(String username) {
         LocalDateTime now = UTCTimeUtils.now();
 

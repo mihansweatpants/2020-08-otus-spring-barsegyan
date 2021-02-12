@@ -13,17 +13,23 @@ const AccountSettings: FC = () => {
   const currentUser = useSelector(state => state.auth.user!);
 
   return (
-    <div className={styles.root}>
-      <Avatar className={styles.avatar} style={{ backgroundColor: stringToHexColor(currentUser.username) }}>
-        {currentUser.username[0].toUpperCase()}
-      </Avatar>
+    <>
+      <Typography variant="h6" color="textSecondary">
+        Account
+      </Typography>
 
-      <div className={styles.userInfo}>
-        <Typography variant="h6">{currentUser.username}</Typography>
-        <Typography color="textSecondary">{currentUser.email}</Typography>
-        <Typography color="textSecondary">{currentUser.id}</Typography>
+      <div className={styles.accountInfo}>
+        <Avatar className={styles.avatar} style={{ backgroundColor: stringToHexColor(currentUser.username) }}>
+          {currentUser.username[0].toUpperCase()}
+        </Avatar>
+
+        <div className={styles.userInfo}>
+          <Typography variant="h6">{currentUser.username}</Typography>
+          <Typography color="textSecondary">{currentUser.email}</Typography>
+          <Typography color="textSecondary">{currentUser.id}</Typography>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

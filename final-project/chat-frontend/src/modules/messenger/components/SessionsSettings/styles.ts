@@ -28,6 +28,7 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
+    minWidth: '100px',
   },
 
   revokeButton: {
@@ -36,7 +37,8 @@ export const useStyles = makeStyles(theme => ({
 
   lastAccessTime: {
     color: theme.palette.grey[400],
-    fontSize: '14px'
+    fontSize: '14px',
+    whiteSpace: 'nowrap',
   },
 
   userAgent: {

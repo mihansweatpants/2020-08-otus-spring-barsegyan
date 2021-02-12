@@ -1,9 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
-  root: {
+  accountInfo: {
     display: 'flex',
     alignItems: 'flex-start',
+    margin: theme.spacing(2, 0),
   },
 
   avatar: {
