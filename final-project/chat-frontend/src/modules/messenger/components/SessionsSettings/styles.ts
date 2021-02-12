@@ -14,6 +14,7 @@ export const useStyles = makeStyles(theme => ({
 
   session: {
     display: 'flex',
+    justifyContent: 'space-between',
     margin: theme.spacing(2, 0),
   },
 
@@ -33,6 +34,7 @@ export const useStyles = makeStyles(theme => ({
 
   revokeButton: {
     marginRight: -theme.spacing(1),
+    marginBottom: -theme.spacing(0.75),
   },
 
   lastAccessTime: {
@@ -45,5 +47,7 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: theme.typography.fontWeightMedium,
   },
 
-  remoteAddr: {},
+  remoteAddr: {
+    marginTop: theme.spacing(1),
+  },
 }));

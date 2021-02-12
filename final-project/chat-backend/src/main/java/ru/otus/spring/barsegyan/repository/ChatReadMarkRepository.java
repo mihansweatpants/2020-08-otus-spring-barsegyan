@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface ChatReadMarkRepository extends JpaRepository<ChatReadMark, UUID> {
     List<ChatReadMark> findAllByUser_Id(UUID userId);
+    void deleteAllByChat_IdAndUserIdIn(UUID chatId, List<UUID> userIds);
 }

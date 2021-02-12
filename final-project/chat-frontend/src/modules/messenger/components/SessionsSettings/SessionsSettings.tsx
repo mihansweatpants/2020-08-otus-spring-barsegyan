@@ -43,8 +43,8 @@ const SessionsSettings: FC = () => {
 
             <div className={styles.session} key={currentSession.id}>
               <div className={styles.sessionDetails}>
-                <Typography className={styles.userAgent}>{currentSession.details.userAgent}</Typography>
-                <Typography className={styles.remoteAddr} color="textSecondary">{currentSession.details.remoteAddr}</Typography>
+                <Typography className={styles.userAgent}>{currentSession.details?.userAgent ?? <>&ndash;</>}</Typography>
+                <Typography className={styles.remoteAddr} color="textSecondary">{currentSession.details?.remoteAddr ?? <>&ndash;</>}</Typography>
               </div>
 
               <div className={styles.revoke}>
@@ -80,8 +80,8 @@ const SessionsSettings: FC = () => {
                   <Fragment key={session.id}>
                     <div className={styles.session}>
                       <div className={styles.sessionDetails}>
-                        <Typography className={styles.userAgent}>{session.details.userAgent}</Typography>
-                        <Typography className={styles.remoteAddr} color="textSecondary">{session.details.remoteAddr}</Typography>
+                        <Typography className={styles.userAgent}>{session.details?.userAgent ?? <>&ndash;</>}</Typography>
+                        <Typography className={styles.remoteAddr} color="textSecondary">{session.details?.remoteAddr ?? <>&ndash;</>}</Typography>
                       </div>
 
                       <div className={styles.revoke}>

@@ -20,19 +20,19 @@ public class ChatReadMark {
     private Chat chat;
 
     @ManyToOne
-    @JoinColumn(name = "chat_message_id")
-    private ChatMessage chatMessage;
+    @JoinColumn(name = "last_read_message_id")
+    private ChatMessage lastReadMessage;
 
     public ChatReadMark() {}
 
     public ChatReadMark(UUID id,
                         AppUser user,
                         Chat chat,
-                        ChatMessage chatMessage) {
+                        ChatMessage lastReadMessage) {
         this.id = id;
         this.user = user;
         this.chat = chat;
-        this.chatMessage = chatMessage;
+        this.lastReadMessage = lastReadMessage;
     }
 
     public UUID getId() {
@@ -47,8 +47,8 @@ public class ChatReadMark {
         return chat;
     }
 
-    public ChatMessage getChatMessage() {
-        return chatMessage;
+    public ChatMessage getLastReadMessage() {
+        return lastReadMessage;
     }
 
     public ChatReadMark setUser(AppUser user) {
@@ -61,8 +61,8 @@ public class ChatReadMark {
         return this;
     }
 
-    public ChatReadMark setChatMessage(ChatMessage chatMessage) {
-        this.chatMessage = chatMessage;
+    public ChatReadMark setLastReadMessage(ChatMessage chatMessage) {
+        this.lastReadMessage = chatMessage;
         return this;
     }
 }

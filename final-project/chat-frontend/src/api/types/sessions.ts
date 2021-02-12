@@ -2,7 +2,7 @@ export interface SessionDto {
   id: string;
   expired: boolean;
   lastAccessedTime: string;
-  details: SessionDetailsDto;
+  details: SessionDetailsDto | null;
 }
 
 export interface SessionDetailsDto {
